@@ -1,0 +1,4 @@
+name: learn-minigame
+version: '${version}'
+main: org.se0k.learnminigame.Learn_minigame
+api-version: '1.20'
