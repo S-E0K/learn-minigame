@@ -44,6 +44,6 @@ public final class Learn_minigame extends JavaPlugin {
 생성, 편집, 몬스터 수 카운트
 
 플레이어
-각 플레이어별 Json 파일에 저장
+각 플레이어별 라운드 정보 Json 파일에 저장
 무기 지급, 회복 아이템 지급, 버프 적용, 사망 체크
 */

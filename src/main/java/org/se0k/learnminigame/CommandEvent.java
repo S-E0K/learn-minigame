@@ -49,10 +49,6 @@ public class CommandEvent extends Command {
             case "set" -> {
                 if (args.length == 1) return false;
                 switch (args[1]) {
-                    case "easy" -> {
-                        setTile.setTile("easy", player);
-                        player.sendMessage("easy 모드");
-                    }
                     case "normal" -> {
                         setTile.setTile("normal", player);
                         player.sendMessage("normal 모드");
@@ -90,7 +86,7 @@ public class CommandEvent extends Command {
     public @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String alias, @NotNull String[] args) {
         if (args.length == 1) return Arrays.asList("in", "out" ,"set", "start", "score");
 
-        if (args[0].equals("set") && args.length == 2) return Arrays.asList("easy", "normal", "hard");
+        if (args[0].equals("set") && args.length == 2) return Arrays.asList("normal", "hard");
 
         return null;
     }
