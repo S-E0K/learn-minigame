@@ -5,6 +5,8 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.WorldBorder;
 import org.bukkit.entity.Player;
+import org.se0k.learnminigame.weapon.GiveWeapon;
+import org.se0k.learnminigame.weapon.SetWeapon;
 
 public class ArenaSetTile implements SetTile {
 
@@ -45,6 +47,12 @@ public class ArenaSetTile implements SetTile {
         worldBorder.setCenter(center);
         worldBorder.setSize(tile);
 
+        player.getInventory().clear();
+
+        SetWeapon setWeapon = new GiveWeapon();
+        setWeapon.giveSword(player, difficulty);
+        setWeapon.giveShield(player, difficulty);
+        setWeapon.giveBow(player, difficulty);
     }
 
     @Override

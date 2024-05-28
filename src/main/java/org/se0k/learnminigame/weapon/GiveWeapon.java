@@ -7,7 +7,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class giveWeapon implements setWeapon{
+public class GiveWeapon implements SetWeapon {
     @Override
     public void giveSword(Player player, String difficulty) {
         Inventory inventory = player.getInventory();
@@ -27,27 +27,40 @@ public class giveWeapon implements setWeapon{
         }
 
         meta.setUnbreakable(true);
-        meta.getEnchants().put(); // 왜 날카로움 인챈으 없음??
+        meta.addEnchant(Enchantment.DAMAGE_ALL, 4, true);
 
 
-
-
-
+        sword.setItemMeta(meta);
         inventory.addItem(sword);
     }
 
     @Override
-    public void giveAxe(Player player, String difficulty) {
-
-    }
-
-    @Override
     public void giveBow(Player player, String difficulty) {
-
+        ItemStack bow = new ItemStack(Material.BOW);
+        ItemMeta meta = bow.getItemMeta();
+        switch (difficulty) {
+            case "hard" -> {
+                meta.addEnchant(Enchantment.ARROW_DAMAGE, 3, true);
+                meta.addEnchant(Enchantment.ARROW_FIRE, 1, true);
+            }
+            default -> {
+                meta.addEnchant(Enchantment.ARROW_DAMAGE, 5, true);
+                meta.setUnbreakable(true);
+            }
+        }
+        meta.addEnchant(Enchantment.ARROW_INFINITE, 1, true);
+        bow.setItemMeta(meta);
+        player.getInventory().addItem(bow);
+        player.getInventory().addItem(new ItemStack(Material.ARROW, 1));
     }
 
     @Override
     public void giveShield(Player player, String difficulty) {
-
+        ItemStack shield = new ItemStack(Material.SHIELD);
+        ItemMeta meta = shield.getItemMeta();
+        meta.setUnbreakable(true);
+        shield.setItemMeta(meta);
+        if (difficulty.equals("hard")) return;
+        player.getInventory().addItem(shield);
     }
 }

@@ -31,11 +31,12 @@ public class CommandEvent extends Command {
 
         SetTile setTile = new ArenaSetTile();
 
+        World world = miniGameWorld("miniGame");
+
         if (args.length == 0) return false;
 
         switch (args[0]) {
             case "in" -> {
-                World world = miniGameWorld("miniGame");
                 Location location = new Location(world, 0.5, world.getHighestBlockYAt(0, 0) + 1, 0.5);
                 if (playerLoc.get(playerUUID) == null) playerLoc.put(playerUUID, player.getLocation());
                 player.teleport(location);
@@ -47,6 +48,12 @@ public class CommandEvent extends Command {
             }
 
             case "set" -> {
+
+                if (!player.getWorld().equals(world)) {
+                    player.sendMessage("미니게임 월드가 아닙니다");
+                    return false;
+                }
+
                 if (args.length == 1) return false;
                 switch (args[1]) {
                     case "normal" -> {
@@ -84,7 +91,7 @@ public class CommandEvent extends Command {
 
     @Override
     public @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String alias, @NotNull String[] args) {
-        if (args.length == 1) return Arrays.asList("in", "out" ,"set", "start", "score");
+        if (args.length == 1) return Arrays.asList("in", "out" ,"set", "item");
 
         if (args[0].equals("set") && args.length == 2) return Arrays.asList("normal", "hard");
 
