@@ -5,6 +5,8 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.WorldBorder;
 import org.bukkit.entity.Player;
+import org.se0k.learnminigame.potion.GivePotion;
+import org.se0k.learnminigame.potion.SetPotion;
 import org.se0k.learnminigame.weapon.GiveWeapon;
 import org.se0k.learnminigame.weapon.SetWeapon;
 
@@ -53,6 +55,10 @@ public class ArenaSetTile implements SetTile {
         setWeapon.giveSword(player, difficulty);
         setWeapon.giveShield(player, difficulty);
         setWeapon.giveBow(player, difficulty);
+
+        SetPotion setPotion = new GivePotion();
+        setPotion.healItem(player, difficulty);
+        setPotion.buffItem(player, difficulty);
     }
 
     @Override

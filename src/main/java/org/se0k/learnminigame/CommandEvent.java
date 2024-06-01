@@ -1,9 +1,6 @@
 package org.se0k.learnminigame;
 
-import org.bukkit.Location;
-import org.bukkit.World;
-import org.bukkit.WorldCreator;
-import org.bukkit.WorldType;
+import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -32,11 +29,13 @@ public class CommandEvent extends Command {
         SetTile setTile = new ArenaSetTile();
 
         World world = miniGameWorld("miniGame");
+        world.setDifficulty(Difficulty.NORMAL);
 
         if (args.length == 0) return false;
 
         switch (args[0]) {
             case "in" -> {
+                player.setSaturation(20);
                 Location location = new Location(world, 0.5, world.getHighestBlockYAt(0, 0) + 1, 0.5);
                 if (playerLoc.get(playerUUID) == null) playerLoc.put(playerUUID, player.getLocation());
                 player.teleport(location);

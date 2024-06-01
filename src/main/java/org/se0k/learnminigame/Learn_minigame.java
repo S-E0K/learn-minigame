@@ -8,7 +8,7 @@ public final class Learn_minigame extends JavaPlugin {
     @Override
     public void onEnable() {
         Bukkit.getCommandMap().register("minigame", new CommandEvent("minigame"));
-
+        getServer().getPluginManager().registerEvents(new HungerEvent(), this);
     }
 
     @Override
