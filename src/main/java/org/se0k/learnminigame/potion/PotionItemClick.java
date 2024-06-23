@@ -71,6 +71,7 @@ public class PotionItemClick implements Listener {
                         player.addPotionEffect(effect);
                     }
 
+
                     count_hard = 15;
                     new BukkitRunnable() {
                         @Override
