@@ -1,7 +1,6 @@
 package org.se0k.learnminigame;
 
 import org.bukkit.Bukkit;
-import org.bukkit.WorldBorder;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.se0k.learnminigame.potion.PotionItemClick;
 
