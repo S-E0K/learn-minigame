@@ -1,4 +1,4 @@
-package org.se0k.learnminigame;
+package org.se0k.learnminigame.json;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -10,8 +10,8 @@ public class JsonUtil {
 
 
 
-    public static void serialize(@NotNull Player player) {
-        String json = gson.toJson(player);
+    public static void serialize(@NotNull PlayerData playerData) {
+        String json = gson.toJson(playerData);
     }
 
 
