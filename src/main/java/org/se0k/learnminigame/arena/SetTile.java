@@ -5,7 +5,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 public interface SetTile {
-    void setTile(String difficulty, Player player);
-    int checkDifficulty(String difficulty);
+    void setTile(Player player);
+    int checkDifficulty();
     void deleteTile(Location location);
 }

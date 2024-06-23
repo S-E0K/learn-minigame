@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/learn-minigame.main.iml" filepath="$PROJECT_DIR$/.idea/modules/learn-minigame.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/org.se0k.learn-minigame.main.iml" filepath="$PROJECT_DIR$/.idea/modules/org.se0k.learn-minigame.main.iml" />
     </modules>
   </component>
 </project>

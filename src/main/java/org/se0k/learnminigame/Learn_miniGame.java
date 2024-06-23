@@ -1,14 +1,22 @@
 package org.se0k.learnminigame;
 
 import org.bukkit.Bukkit;
+import org.bukkit.WorldBorder;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.se0k.learnminigame.potion.PotionItemClick;
 
-public final class Learn_minigame extends JavaPlugin {
+public final class Learn_miniGame extends JavaPlugin {
+
+    public static Learn_miniGame instance;
+    public static Learn_miniGame plugin;
 
     @Override
     public void onEnable() {
+        instance = this;
+        plugin = this;
         Bukkit.getCommandMap().register("minigame", new CommandEvent("minigame"));
-        getServer().getPluginManager().registerEvents(new HungerEvent(), this);
+        getServer().getPluginManager().registerEvents(new PlayerEvent(), this);
+        getServer().getPluginManager().registerEvents(new PotionItemClick(), this);
     }
 
     @Override

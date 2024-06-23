@@ -19,10 +19,12 @@ public class CommandEvent extends Command {
         super(str);
     }
     final HashMap<UUID, Location> playerLoc = new HashMap<>();
+    public static String difficulty = "normal";
 
     @Override
     public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabels, @NotNull String[] args) {
         if (!(sender instanceof Player player)) return false;
+
 
         UUID playerUUID = player.getUniqueId();
 
@@ -56,18 +58,20 @@ public class CommandEvent extends Command {
                 if (args.length == 1) return false;
                 switch (args[1]) {
                     case "normal" -> {
-                        setTile.setTile("normal", player);
+                        setTile.setTile(player);
                         player.sendMessage("normal 모드");
+                        difficulty = "normal";
                     }
                     case "hard" -> {
-                        setTile.setTile("hard", player);
+                        setTile.setTile(player);
                         player.sendMessage("hard 모드");
+                        difficulty = "hard";
                     }
                 }
             }
-//            case "start" -> {
-//
-//            }
+            case "start" -> {
+
+            }
 //            case "score" -> {
 //
 //            }
@@ -90,7 +94,7 @@ public class CommandEvent extends Command {
 
     @Override
     public @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String alias, @NotNull String[] args) {
-        if (args.length == 1) return Arrays.asList("in", "out" ,"set", "item");
+        if (args.length == 1) return Arrays.asList("in", "out" ,"set", "item", "start");
 
         if (args[0].equals("set") && args.length == 2) return Arrays.asList("normal", "hard");
 

@@ -7,9 +7,11 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import static org.se0k.learnminigame.CommandEvent.difficulty;
+
 public class GiveWeapon implements SetWeapon {
     @Override
-    public void giveSword(Player player, String difficulty) {
+    public void giveSword(Player player) {
         Inventory inventory = player.getInventory();
         ItemStack sword;
         ItemMeta meta;
@@ -35,7 +37,7 @@ public class GiveWeapon implements SetWeapon {
     }
 
     @Override
-    public void giveBow(Player player, String difficulty) {
+    public void giveBow(Player player) {
         ItemStack bow = new ItemStack(Material.BOW);
         ItemMeta meta = bow.getItemMeta();
         switch (difficulty) {
@@ -55,7 +57,7 @@ public class GiveWeapon implements SetWeapon {
     }
 
     @Override
-    public void giveShield(Player player, String difficulty) {
+    public void giveShield(Player player) {
         ItemStack shield = new ItemStack(Material.SHIELD);
         ItemMeta meta = shield.getItemMeta();
         meta.setUnbreakable(true);

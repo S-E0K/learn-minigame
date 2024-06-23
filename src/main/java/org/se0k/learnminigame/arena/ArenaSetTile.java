@@ -10,13 +10,15 @@ import org.se0k.learnminigame.potion.SetPotion;
 import org.se0k.learnminigame.weapon.GiveWeapon;
 import org.se0k.learnminigame.weapon.SetWeapon;
 
+import static org.se0k.learnminigame.CommandEvent.difficulty;
+
 public class ArenaSetTile implements SetTile {
 
     @Override
-    public void setTile(String difficulty, Player player) {
+    public void setTile(Player player) {
 
         player.setBodyYaw(0);
-        int tile = checkDifficulty(difficulty);
+        int tile = checkDifficulty();
         int x = tile / 2;
 
         World world = player.getWorld();
@@ -52,17 +54,17 @@ public class ArenaSetTile implements SetTile {
         player.getInventory().clear();
 
         SetWeapon setWeapon = new GiveWeapon();
-        setWeapon.giveSword(player, difficulty);
-        setWeapon.giveShield(player, difficulty);
-        setWeapon.giveBow(player, difficulty);
+        setWeapon.giveSword(player);
+        setWeapon.giveShield(player);
+        setWeapon.giveBow(player);
 
         SetPotion setPotion = new GivePotion();
-        setPotion.healItem(player, difficulty);
-        setPotion.buffItem(player, difficulty);
+        setPotion.healItem(player);
+        setPotion.buffItem(player);
     }
 
     @Override
-    public int checkDifficulty(String difficulty) {
+    public int checkDifficulty() {
         switch (difficulty) {
             case "hard" -> {
                 return 21;
