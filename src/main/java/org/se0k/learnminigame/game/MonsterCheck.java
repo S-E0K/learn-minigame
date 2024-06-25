@@ -7,9 +7,7 @@ import org.bukkit.event.Listener;
 
 import java.util.UUID;
 
-import static org.bukkit.plugin.java.JavaPlugin.getProvidingPlugin;
 import static org.se0k.learnminigame.CommandEvent.difficulty;
-import static org.se0k.learnminigame.Learn_miniGame.plugin;
 import static org.se0k.learnminigame.game.Game.*;
 
 public class MonsterCheck implements Listener {
