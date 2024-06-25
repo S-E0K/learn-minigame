@@ -7,19 +7,23 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.se0k.learnminigame.arena.ArenaSetTile;
 import org.se0k.learnminigame.arena.SetTile;
+import org.se0k.learnminigame.game.Game;
+import org.se0k.learnminigame.game.SetGame;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+
+import static org.se0k.learnminigame.game.Game.gameCheck;
 
 
 public class CommandEvent extends Command {
     public CommandEvent(String str) {
         super(str);
     }
+
     final HashMap<UUID, Location> playerLoc = new HashMap<>();
     public static String difficulty = "normal";
+
+    public final static HashMap<UUID, Integer> playerStage = new HashMap<>();
 
     @Override
     public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabels, @NotNull String[] args) {
@@ -48,6 +52,25 @@ public class CommandEvent extends Command {
                 playerLoc.remove(playerUUID);
             }
 
+            case "start" -> {
+                player.sendMessage("게임 시작");
+                gameCheck = 1;
+                SetGame setGame = new Game();
+                setGame.gameStart(player);
+            }
+
+            case "end" -> {
+                player.sendMessage("미니게임 수동 종료");
+                gameCheck = 0;
+                SetGame setGame = new Game();
+                setGame.gameEnd(player);
+            }
+
+            case "stage" -> {
+                SetGame setGame = new Game();
+                setGame.gameStage(player);
+            }
+
             case "set" -> {
 
                 if (!player.getWorld().equals(world)) {
@@ -58,27 +81,23 @@ public class CommandEvent extends Command {
                 if (args.length == 1) return false;
                 switch (args[1]) {
                     case "normal" -> {
+                        difficulty = "normal";
                         setTile.setTile(player);
                         player.sendMessage("normal 모드");
-                        difficulty = "normal";
+
                     }
                     case "hard" -> {
+                        difficulty = "hard";
                         setTile.setTile(player);
                         player.sendMessage("hard 모드");
-                        difficulty = "hard";
+
                     }
                 }
             }
-            case "start" -> {
-
+            default -> {
+                player.sendMessage("잘못 입력함");
             }
-//            case "score" -> {
-//
-//            }
-
         }
-
-
 
         return false;
     }
@@ -94,7 +113,7 @@ public class CommandEvent extends Command {
 
     @Override
     public @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String alias, @NotNull String[] args) {
-        if (args.length == 1) return Arrays.asList("in", "out" ,"set", "item", "start");
+        if (args.length == 1) return Arrays.asList("in", "out", "set", "start", "end", "stage", "start");
 
         if (args[0].equals("set") && args.length == 2) return Arrays.asList("normal", "hard");
 

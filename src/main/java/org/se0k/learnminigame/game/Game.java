@@ -1,41 +1,64 @@
 package org.se0k.learnminigame.game;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.se0k.learnminigame.Learn_miniGame;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.se0k.learnminigame.monster.MonsterDifficulty;
+import org.se0k.learnminigame.monster.MonsterSpawn;
 
-import java.util.HashMap;
 import java.util.UUID;
 
-public class Game implements SetGame{
 
-    HashMap<UUID, Integer> stageData = new HashMap<>();
+import static org.se0k.learnminigame.CommandEvent.playerStage;
+import static org.se0k.learnminigame.Learn_miniGame.plugin;
+
+public class Game implements SetGame {
+
     static int stage = 0;
-    int gameCheck = 0;
+    public static int gameCheck = 0;
+    public static int countDown = 0;
 
     @Override
     public void gameStart(Player player) {
+        if (gameCheck != 1) return;
         UUID playerUUID = player.getUniqueId();
-        gameCheck = 1;
-        if (!stageData.containsKey(playerUUID)) stageData.put(playerUUID, 0);
-        gameStage(player);
+        if (!playerStage.containsKey(playerUUID)) playerStage.put(playerUUID, 0);
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+
+                if (countDown != 0) {
+                    player.sendMessage("딜레이중");
+                    countDown -= 1;
+                }
+
+                if (countDown == 0) {
+                    player.sendMessage("몬스터 소환");
+
+                    MonsterDifficulty monsterDifficulty = new MonsterSpawn();
+                    monsterDifficulty.spawn(player);
+                    this.cancel();
+                    return;
+                }
+
+            }
+        }.runTaskTimer(plugin, 0, 20L);
+
     }
 
     @Override
     public void gameEnd(Player player) {
         gameCheck = 0;
         UUID playerUUID = player.getUniqueId();
-        stageData.replace(playerUUID, stage);
+
+        if (stage > playerStage.get(playerUUID)) playerStage.replace(playerUUID, stage);
     }
 
     @Override
     public void gameStage(Player player) {
-        while(gameCheck == 1) {
-            Bukkit.getScheduler().scheduleSyncRepeatingTask(Learn_miniGame.instance, () -> {
-                player.sendMessage("스테이지 증가");
-                stage += 1;
-            }, 0, 20);
-        }
+
+        player.sendMessage(String.valueOf(playerStage.get(player.getUniqueId())));
 
     }
+
 }

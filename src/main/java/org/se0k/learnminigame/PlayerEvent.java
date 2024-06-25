@@ -11,6 +11,9 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.se0k.learnminigame.json.PlayerData;
 
+import java.util.UUID;
+
+import static org.se0k.learnminigame.CommandEvent.playerStage;
 import static org.se0k.learnminigame.json.JsonUtil.serialize;
 
 public class PlayerEvent implements Listener {
@@ -19,8 +22,13 @@ public class PlayerEvent implements Listener {
     public void playerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        PlayerData playerData = new PlayerData(player.getName(), player.getUniqueId(), 0);
-        serialize(playerData);
+        UUID uuid = player.getUniqueId();
+
+        playerStage.put(uuid, 0);
+
+
+//        PlayerData playerData = new PlayerData(player.getName(), player.getUniqueId(), 0);
+//        serialize(playerData);
 
     }
 
