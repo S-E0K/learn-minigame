@@ -29,12 +29,17 @@ public class Game implements SetGame {
             public void run() {
 
                 if (countDown != 0) {
-                    gameCheck = GameCheck.GAME_END;
+                    if (gameCheck != GameCheck.GAME_BREAK) gameCheck = GameCheck.GAME_END;
                     player.sendMessage("딜레이중");
                     countDown -= 1;
                 }
 
                 if (countDown == 0) {
+                    if (gameCheck == GameCheck.GAME_BREAK) {
+                        this.cancel();
+                        return;
+                    }
+
                     gameCheck = GameCheck.GAME_START;
                     player.sendMessage("몬스터 소환");
 
@@ -42,7 +47,6 @@ public class Game implements SetGame {
                     monsterDifficulty.spawn(player);
                     this.cancel();
                 }
-
             }
         }.runTaskTimer(plugin, 0, 20L);
 
@@ -50,7 +54,7 @@ public class Game implements SetGame {
 
     @Override
     public void gameEnd(Player player) {
-        gameCheck = GameCheck.GAME_END;
+        if (gameCheck != GameCheck.GAME_BREAK) gameCheck = GameCheck.GAME_END;
         UUID playerUUID = player.getUniqueId();
 
         if (stage > playerStage.get(playerUUID)) playerStage.replace(playerUUID, stage);

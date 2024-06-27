@@ -27,7 +27,6 @@ public class MonsterCheck implements Listener {
 
         String monsterName = event.getMob().getDisplayName();
         Player player = (Player) event.getKiller();
-        UUID uuid = player.getUniqueId();
         SetPotion setPotion = new GivePotion();
         SetGame setGame = new Game();
 
@@ -49,6 +48,7 @@ public class MonsterCheck implements Listener {
 
                     killCheck = 0;
                     countDown = 10;
+                    if (gameCheck == GameCheck.GAME_BREAK) return;
                     setGame.gameStart(player);
                     player.sendMessage(stage + "스테이지 클리어");
                     stage += 1;

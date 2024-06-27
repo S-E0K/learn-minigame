@@ -32,12 +32,9 @@ public class CommandEvent extends Command {
     public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabels, @NotNull String[] args) {
         if (!(sender instanceof Player player)) return false;
 
-
         UUID playerUUID = player.getUniqueId();
-
         SetTile setTile = new ArenaSetTile();
 
-//        World world = miniGameWorld("miniGame");
         world.setDifficulty(Difficulty.NORMAL);
 
         if (args.length == 0) return false;
@@ -60,6 +57,7 @@ public class CommandEvent extends Command {
             }
 
             case "start" -> {
+                if (gameCheck == GameCheck.GAME_START) return false;
                 SetWeapon setWeapon = new GiveWeapon();
                 setWeapon.giveSword(player);
                 setWeapon.giveShield(player);
@@ -72,8 +70,8 @@ public class CommandEvent extends Command {
             }
 
             case "end" -> {
-                player.sendMessage("미니게임 수동 종료");
-                gameCheck = GameCheck.GAME_END;
+                player.sendMessage("미니게임 강제 종료");
+                gameCheck = GameCheck.GAME_BREAK;
                 SetGame setGame = new Game();
                 setGame.gameEnd(player);
             }
@@ -112,7 +110,6 @@ public class CommandEvent extends Command {
         }
         return false;
     }
-
 
     public static World miniGameWorld(String name) {
         WorldCreator worldCreator = new WorldCreator(name);

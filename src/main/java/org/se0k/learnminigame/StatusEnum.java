@@ -8,7 +8,8 @@ public class StatusEnum {
 
     public enum GameCheck {
         GAME_START,
-        GAME_END;
+        GAME_END,
+        GAME_BREAK;
     }
 
     public enum StageLoc {
