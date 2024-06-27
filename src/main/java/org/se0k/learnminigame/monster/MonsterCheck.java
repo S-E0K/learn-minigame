@@ -25,6 +25,7 @@ public class MonsterCheck implements Listener {
 
         if (gameCheck == GameCheck.GAME_END) return;
 
+        String monsterName = event.getMob().getDisplayName();
         Player player = (Player) event.getKiller();
         UUID uuid = player.getUniqueId();
         SetPotion setPotion = new GivePotion();
@@ -32,9 +33,9 @@ public class MonsterCheck implements Listener {
 
         switch (difficulty) {
             case "normal" -> {
-                if (event.getMob().getDisplayName().equals("1레벨 하트병사") || event.getMob().getDisplayName().equals("2레벨 하트병사") || event.getMob().getDisplayName().equals("3레벨 하트병사")) {
+                if (monsterName.equals("1레벨 하트병사") || monsterName.equals("2레벨 하트병사") || monsterName.equals("3레벨 하트병사")) {
                     killCheck += 1;
-                    player.sendMessage(event.getMob().getDisplayName() + " 처치");
+                    player.sendMessage(monsterName + " 처치");
                 }
 
                 if (killCheck == monsterCount()) {
@@ -47,19 +48,19 @@ public class MonsterCheck implements Listener {
                     }
 
                     killCheck = 0;
-                    countDown = 5;
+                    countDown = 10;
                     setGame.gameStart(player);
                     player.sendMessage(stage + "스테이지 클리어");
                     stage += 1;
                 }
             }
             case "hard" -> {
-                if (event.getMob().getDisplayName().equals("스페이드병사")) {
+                if (monsterName.equals("1레벨 스페이드병사") || monsterName.equals("2레벨 스페이드병사") || monsterName.equals("3레벨 스페이드병사")) {
                     killCheck += 1;
-                    player.sendMessage("스페이드병사 처치");
+                    player.sendMessage(monsterName + " 처치");
                 }
 
-                if (killCheck == 3) {
+                if (killCheck == monsterCount() + 1) {
 
                     if (stage == 3) {
                         setPotion.healItem(player);
@@ -69,7 +70,7 @@ public class MonsterCheck implements Listener {
                     }
 
                     killCheck = 0;
-                    countDown = 5;
+                    countDown = 10;
                     setGame.gameStart(player);
                     player.sendMessage(stage + "스테이지");
                     stage += 1;

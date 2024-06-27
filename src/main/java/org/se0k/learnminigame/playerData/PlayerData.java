@@ -1,11 +1,11 @@
-package org.se0k.learnminigame.json;
+package org.se0k.learnminigame.playerData;
 
 import java.util.UUID;
 
 public class PlayerData {
-    private String name;
-    private UUID uuid;
-    private int stage;
+    private final String name;
+    private final UUID uuid;
+    private final int stage;
 
     public PlayerData(String name, UUID uuid, int stage) {
         this.name = name;

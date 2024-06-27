@@ -54,13 +54,14 @@ public class ArenaSetTile implements SetTile {
     @Override
     public int checkDifficulty() {
         switch (difficulty) {
+            case "normal" -> {
+                return 31;
+            }
             case "hard" -> {
                 return 21;
             }
-            default -> {
-                return 31;
-            }
         }
+        return 31;
     }
 
     @Override

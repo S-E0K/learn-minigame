@@ -8,20 +8,21 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class GivePotion implements SetPotion{
     @Override
     public void healItem(Player player) {
-        ItemStack itemStack = new ItemStack(Material.IRON_INGOT);
-        ItemMeta meta = itemStack.getItemMeta();
-        meta.setDisplayName("체력 재생");
-        itemStack.setItemMeta(meta);
-        player.getInventory().addItem(itemStack);
+        itemManager(player, Material.IRON_INGOT, "체력 재생");
     }
 
     @Override
     public void buffItem(Player player) {
-        ItemStack itemStack = new ItemStack(Material.GOLD_INGOT);
+        itemManager(player, Material.GOLD_INGOT, "힘 증가");
+    }
+
+    void itemManager(Player player, Material material, String name) {
+        ItemStack itemStack = new ItemStack(material);
         ItemMeta meta = itemStack.getItemMeta();
-        meta.setDisplayName("힘 증가");
+        meta.setDisplayName(name);
         itemStack.setItemMeta(meta);
         player.getInventory().addItem(itemStack);
     }
+
 
 }

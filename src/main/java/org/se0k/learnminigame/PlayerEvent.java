@@ -7,29 +7,24 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.se0k.learnminigame.json.PlayerData;
-
-import java.util.UUID;
+import org.se0k.learnminigame.game.Game;
+import org.se0k.learnminigame.game.SetGame;
 
 import static org.se0k.learnminigame.CommandEvent.playerStage;
-import static org.se0k.learnminigame.json.JsonUtil.serialize;
+import static org.se0k.learnminigame.StatusEnum.gameCheck;
 
 public class PlayerEvent implements Listener {
 
     @EventHandler
-    public void playerJoin(PlayerJoinEvent event) {
+    public void playerDeathEnd(PlayerDeathEvent event) {
         Player player = event.getPlayer();
 
-        UUID uuid = player.getUniqueId();
-
-        playerStage.put(uuid, 0);
-
-
-//        PlayerData playerData = new PlayerData(player.getName(), player.getUniqueId(), 0);
-//        serialize(playerData);
-
+        gameCheck = StatusEnum.GameCheck.GAME_END;
+        SetGame setGame = new Game();
+        setGame.gameEnd(player);
+        player.sendMessage(playerStage.get(player.getUniqueId()) - 1 + "스테이지 클리어");
     }
 
     @EventHandler

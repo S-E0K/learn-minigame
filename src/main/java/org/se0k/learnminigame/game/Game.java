@@ -16,13 +16,11 @@ import static org.se0k.learnminigame.StatusEnum.*;
 public class Game implements SetGame {
 
     public static int stage = 1;
-//    public StatusEnum.GameCheck gameCheck;
     public static int countDown = 0;
 
     @Override
     public void gameStart(Player player) {
         if (gameCheck == StatusEnum.GameCheck.GAME_END) return;
-//        if (gameCheck != 1) return;
         UUID playerUUID = player.getUniqueId();
         if (!playerStage.containsKey(playerUUID)) playerStage.put(playerUUID, 0);
 
@@ -43,7 +41,6 @@ public class Game implements SetGame {
                     MonsterDifficulty monsterDifficulty = new MonsterSpawn();
                     monsterDifficulty.spawn(player);
                     this.cancel();
-                    return;
                 }
 
             }
@@ -61,7 +58,7 @@ public class Game implements SetGame {
 
     @Override
     public void gameStage(Player player) {
-        player.sendMessage(String.valueOf(playerStage.get(player.getUniqueId())));
+        player.sendMessage(String.valueOf(playerStage.get(player.getUniqueId()) - 1));
     }
 
 

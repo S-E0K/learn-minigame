@@ -41,13 +41,13 @@ public class GiveWeapon implements SetWeapon {
         ItemStack bow = new ItemStack(Material.BOW);
         ItemMeta meta = bow.getItemMeta();
         switch (difficulty) {
+            case "normal" -> {
+                meta.addEnchant(Enchantment.ARROW_DAMAGE, 5, true);
+                meta.setUnbreakable(true);
+            }
             case "hard" -> {
                 meta.addEnchant(Enchantment.ARROW_DAMAGE, 3, true);
                 meta.addEnchant(Enchantment.ARROW_FIRE, 1, true);
-            }
-            default -> {
-                meta.addEnchant(Enchantment.ARROW_DAMAGE, 5, true);
-                meta.setUnbreakable(true);
             }
         }
         meta.addEnchant(Enchantment.ARROW_INFINITE, 1, true);

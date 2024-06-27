@@ -15,8 +15,6 @@ import org.se0k.learnminigame.weapon.SetWeapon;
 import java.util.*;
 
 import static org.se0k.learnminigame.StatusEnum.*;
-//import static org.se0k.learnminigame.game.Game.gameCheck;
-
 
 public class CommandEvent extends Command {
     public CommandEvent(String str) {
@@ -112,7 +110,6 @@ public class CommandEvent extends Command {
                 player.sendMessage("잘못 입력함");
             }
         }
-
         return false;
     }
 
@@ -123,7 +120,6 @@ public class CommandEvent extends Command {
         worldCreator.generateStructures(false);
         return worldCreator.createWorld();
     }
-
 
     @Override
     public @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String alias, @NotNull String[] args) {
