@@ -9,10 +9,13 @@ import org.se0k.learnminigame.arena.ArenaSetTile;
 import org.se0k.learnminigame.arena.SetTile;
 import org.se0k.learnminigame.game.Game;
 import org.se0k.learnminigame.game.SetGame;
+import org.se0k.learnminigame.weapon.GiveWeapon;
+import org.se0k.learnminigame.weapon.SetWeapon;
 
 import java.util.*;
 
-import static org.se0k.learnminigame.game.Game.gameCheck;
+import static org.se0k.learnminigame.StatusEnum.*;
+//import static org.se0k.learnminigame.game.Game.gameCheck;
 
 
 public class CommandEvent extends Command {
@@ -25,6 +28,8 @@ public class CommandEvent extends Command {
 
     public final static HashMap<UUID, Integer> playerStage = new HashMap<>();
 
+    public static World world = miniGameWorld("miniGame");
+
     @Override
     public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabels, @NotNull String[] args) {
         if (!(sender instanceof Player player)) return false;
@@ -34,34 +39,43 @@ public class CommandEvent extends Command {
 
         SetTile setTile = new ArenaSetTile();
 
-        World world = miniGameWorld("miniGame");
+//        World world = miniGameWorld("miniGame");
         world.setDifficulty(Difficulty.NORMAL);
 
         if (args.length == 0) return false;
 
         switch (args[0]) {
             case "in" -> {
+                if (stageLoc == StageLoc.STAGE_IN) return false;
+                stageLoc = StageLoc.STAGE_IN;
                 player.setSaturation(20);
-                Location location = new Location(world, 0.5, world.getHighestBlockYAt(0, 0) + 1, 0.5);
+                Location location = new Location(world, 0.5, world.getHighestBlockYAt(0, 0) + 2, 7.5);
                 if (playerLoc.get(playerUUID) == null) playerLoc.put(playerUUID, player.getLocation());
                 player.teleport(location);
             }
 
             case "out" -> {
+                if (stageLoc == StageLoc.STAGE_OUT) return false;
+                stageLoc = StageLoc.STAGE_OUT;
                 if (playerLoc.get(playerUUID) != null) player.teleport(playerLoc.get(playerUUID));
                 playerLoc.remove(playerUUID);
             }
 
             case "start" -> {
+                SetWeapon setWeapon = new GiveWeapon();
+                setWeapon.giveSword(player);
+                setWeapon.giveShield(player);
+                setWeapon.giveBow(player);
+
                 player.sendMessage("게임 시작");
-                gameCheck = 1;
+                gameCheck = GameCheck.GAME_START;
                 SetGame setGame = new Game();
                 setGame.gameStart(player);
             }
 
             case "end" -> {
                 player.sendMessage("미니게임 수동 종료");
-                gameCheck = 0;
+                gameCheck = GameCheck.GAME_END;
                 SetGame setGame = new Game();
                 setGame.gameEnd(player);
             }
@@ -73,7 +87,7 @@ public class CommandEvent extends Command {
 
             case "set" -> {
 
-                if (!player.getWorld().equals(world)) {
+                if (stageLoc == StageLoc.STAGE_OUT) {
                     player.sendMessage("미니게임 월드가 아닙니다");
                     return false;
                 }
@@ -103,7 +117,7 @@ public class CommandEvent extends Command {
     }
 
 
-    public World miniGameWorld(String name) {
+    public static World miniGameWorld(String name) {
         WorldCreator worldCreator = new WorldCreator(name);
         worldCreator.type(WorldType.FLAT);
         worldCreator.generateStructures(false);

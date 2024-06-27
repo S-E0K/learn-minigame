@@ -2,10 +2,8 @@ package org.se0k.learnminigame;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.se0k.learnminigame.game.MonsterCheck;
+import org.se0k.learnminigame.monster.MonsterCheck;
 import org.se0k.learnminigame.potion.PotionItemClick;
-
-import static org.se0k.learnminigame.CommandEvent.playerStage;
 
 public final class Learn_miniGame extends JavaPlugin {
 
