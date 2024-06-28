@@ -9,6 +9,10 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
 import static org.se0k.learnminigame.CommandEvent.difficulty;
 import static org.se0k.learnminigame.Learn_miniGame.plugin;
 import static org.se0k.learnminigame.game.Game.*;
@@ -17,7 +21,8 @@ import static org.se0k.learnminigame.StatusEnum.*;
 
 public class MonsterSpawn implements MonsterDifficulty{
 
-    int spawnCount = 0;
+    public static Map<UUID, Entity> spawnMonster = new HashMap<>();
+
 
     public void spawn(Player player) {
 
@@ -32,13 +37,13 @@ public class MonsterSpawn implements MonsterDifficulty{
                             this.cancel();
                             return;
                         }
-                        if (spawnCount == monsterCount()) {
-                            spawnCount = 0;
+
+                        if (spawnMonster.size() == monsterCount()) {
+                            spawnStats = SpawnStats.END;
                             this.cancel();
                             return;
                         }
                         normal(player);
-                        spawnCount += 1;
                     }
                 }.runTaskTimer(plugin, 0L, 60L);
             }
@@ -50,13 +55,13 @@ public class MonsterSpawn implements MonsterDifficulty{
                             this.cancel();
                             return;
                         }
-                        if (spawnCount == monsterCount() + 1) {
-                            spawnCount = 0;
+                        if (spawnMonster.size() == monsterCount() + 1) {
+                            spawnStats = SpawnStats.END;
+
                             this.cancel();
                             return;
                         }
                         hard(player);
-                        spawnCount += 1;
                     }
                 }.runTaskTimer(plugin, 0L, 40L);
             }
@@ -71,6 +76,7 @@ public class MonsterSpawn implements MonsterDifficulty{
         if (mob != null) {
             ActiveMob heart = mob.spawn(BukkitAdapter.adapt(spawnLocation), 1);
             Entity entity = heart.getEntity().getBukkitEntity();
+            spawnMonster.put(heart.getUniqueId(), entity);
         }
     }
 
@@ -82,7 +88,14 @@ public class MonsterSpawn implements MonsterDifficulty{
         if (mob != null) {
             ActiveMob spade = mob.spawn(BukkitAdapter.adapt(spawnLocation), 1);
             Entity entity = spade.getEntity().getBukkitEntity();
+            spawnMonster.put(spade.getUniqueId(), entity);
         }
+    }
+
+    @Override
+    public void clear() {
+        spawnMonster.values().forEach(Entity::remove);
+        spawnMonster.clear();
     }
 
     public String normalStageMonster() {

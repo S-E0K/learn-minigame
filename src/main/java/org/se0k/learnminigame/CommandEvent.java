@@ -9,22 +9,25 @@ import org.se0k.learnminigame.arena.ArenaSetTile;
 import org.se0k.learnminigame.arena.SetTile;
 import org.se0k.learnminigame.game.Game;
 import org.se0k.learnminigame.game.SetGame;
+import org.se0k.learnminigame.monster.MonsterDifficulty;
+import org.se0k.learnminigame.monster.MonsterSpawn;
 import org.se0k.learnminigame.weapon.GiveWeapon;
 import org.se0k.learnminigame.weapon.SetWeapon;
 
 import java.util.*;
 
 import static org.se0k.learnminigame.StatusEnum.*;
+import static org.se0k.learnminigame.game.Game.stage;
 
 public class CommandEvent extends Command {
     public CommandEvent(String str) {
         super(str);
     }
 
-    final HashMap<UUID, Location> playerLoc = new HashMap<>();
+    final Map<UUID, Location> playerLoc = new HashMap<>();
     public static String difficulty = "normal";
 
-    public final static HashMap<UUID, Integer> playerStage = new HashMap<>();
+    public final static Map<UUID, Integer> playerStage = new HashMap<>();
 
     public static World world = miniGameWorld("miniGame");
 
@@ -58,6 +61,8 @@ public class CommandEvent extends Command {
 
             case "start" -> {
                 if (gameCheck == GameCheck.GAME_START) return false;
+                player.getInventory().clear();
+                stage = 1;
                 SetWeapon setWeapon = new GiveWeapon();
                 setWeapon.giveSword(player);
                 setWeapon.giveShield(player);
@@ -74,6 +79,8 @@ public class CommandEvent extends Command {
                 gameCheck = GameCheck.GAME_BREAK;
                 SetGame setGame = new Game();
                 setGame.gameEnd(player);
+                MonsterDifficulty difficulty = new MonsterSpawn();
+                difficulty.clear();
             }
 
             case "stage" -> {

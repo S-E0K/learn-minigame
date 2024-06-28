@@ -11,20 +11,29 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.se0k.learnminigame.game.Game;
 import org.se0k.learnminigame.game.SetGame;
+import org.se0k.learnminigame.monster.MonsterDifficulty;
+import org.se0k.learnminigame.monster.MonsterSpawn;
 
 import static org.se0k.learnminigame.CommandEvent.playerStage;
 import static org.se0k.learnminigame.StatusEnum.gameCheck;
+import static org.se0k.learnminigame.game.Game.stage;
 
 public class PlayerEvent implements Listener {
 
     @EventHandler
     public void playerDeathEnd(PlayerDeathEvent event) {
+        if (gameCheck != StatusEnum.GameCheck.GAME_START) return;
         Player player = event.getPlayer();
 
         gameCheck = StatusEnum.GameCheck.GAME_END;
         SetGame setGame = new Game();
         setGame.gameEnd(player);
-        player.sendMessage(playerStage.get(player.getUniqueId()) - 1 + "스테이지 클리어");
+        player.sendMessage("현재 스테이지: " + stage + " 스테이지에서 죽으셨습니다");
+        player.sendMessage("최고 클리어 스테이지: " + (playerStage.get(player.getUniqueId()) - 1) + "스테이지");
+
+        MonsterDifficulty difficulty = new MonsterSpawn();
+        difficulty.clear();
+
     }
 
     @EventHandler
@@ -71,6 +80,5 @@ public class PlayerEvent implements Listener {
 
         event.setCancelled(true);
     }
-
 
 }

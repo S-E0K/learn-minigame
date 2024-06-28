@@ -7,5 +7,6 @@ public interface MonsterDifficulty {
     void spawn(Player player);
     void normal(Player player);
     void hard(Player player);
+    void clear();
 
 }

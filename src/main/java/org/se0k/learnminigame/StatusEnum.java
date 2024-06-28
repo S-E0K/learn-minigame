@@ -6,6 +6,8 @@ public class StatusEnum {
 
     public static StageLoc stageLoc;
 
+    public static SpawnStats spawnStats;
+
     public enum GameCheck {
         GAME_START,
         GAME_END,
@@ -15,6 +17,11 @@ public class StatusEnum {
     public enum StageLoc {
         STAGE_IN,
         STAGE_OUT;
+    }
+
+    public enum SpawnStats {
+        NOT_END,
+        END;
     }
 
 }

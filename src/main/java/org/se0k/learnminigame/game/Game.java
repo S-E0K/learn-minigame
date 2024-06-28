@@ -8,7 +8,6 @@ import org.se0k.learnminigame.monster.MonsterSpawn;
 
 import java.util.UUID;
 
-
 import static org.se0k.learnminigame.CommandEvent.playerStage;
 import static org.se0k.learnminigame.Learn_miniGame.plugin;
 import static org.se0k.learnminigame.StatusEnum.*;
@@ -62,8 +61,7 @@ public class Game implements SetGame {
 
     @Override
     public void gameStage(Player player) {
-        player.sendMessage(String.valueOf(playerStage.get(player.getUniqueId()) - 1));
+        player.sendMessage(playerStage.get(player.getUniqueId()) - 1 + "스테이지 까지 클리어 하셨습니다");
     }
-
 
 }
