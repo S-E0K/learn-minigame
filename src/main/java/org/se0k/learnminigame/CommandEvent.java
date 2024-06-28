@@ -11,6 +11,7 @@ import org.se0k.learnminigame.game.Game;
 import org.se0k.learnminigame.game.SetGame;
 import org.se0k.learnminigame.monster.MonsterDifficulty;
 import org.se0k.learnminigame.monster.MonsterSpawn;
+import org.se0k.learnminigame.playerData.JsonUtil;
 import org.se0k.learnminigame.weapon.GiveWeapon;
 import org.se0k.learnminigame.weapon.SetWeapon;
 
@@ -27,9 +28,10 @@ public class CommandEvent extends Command {
     final Map<UUID, Location> playerLoc = new HashMap<>();
     public static String difficulty = "normal";
 
-    public final static Map<UUID, Integer> playerStage = new HashMap<>();
+    public final static Map<String, Integer> playerStage = new HashMap<>();
 
     public static World world = miniGameWorld("miniGame");
+    JsonUtil jsonUtil = new JsonUtil();
 
     @Override
     public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabels, @NotNull String[] args) {
@@ -81,6 +83,9 @@ public class CommandEvent extends Command {
                 setGame.gameEnd(player);
                 MonsterDifficulty difficulty = new MonsterSpawn();
                 difficulty.clear();
+
+                jsonUtil.dataSave(player);
+                player.getInventory().clear();
             }
 
             case "stage" -> {

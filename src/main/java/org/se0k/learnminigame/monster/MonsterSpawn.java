@@ -38,8 +38,7 @@ public class MonsterSpawn implements MonsterDifficulty{
                             return;
                         }
 
-                        if (spawnMonster.size() == monsterCount()) {
-                            spawnStats = SpawnStats.END;
+                        if (spawnStats == SpawnStats.END) {
                             this.cancel();
                             return;
                         }
@@ -55,9 +54,7 @@ public class MonsterSpawn implements MonsterDifficulty{
                             this.cancel();
                             return;
                         }
-                        if (spawnMonster.size() == monsterCount() + 1) {
-                            spawnStats = SpawnStats.END;
-
+                        if (spawnStats == SpawnStats.END) {
                             this.cancel();
                             return;
                         }
@@ -77,6 +74,9 @@ public class MonsterSpawn implements MonsterDifficulty{
             ActiveMob heart = mob.spawn(BukkitAdapter.adapt(spawnLocation), 1);
             Entity entity = heart.getEntity().getBukkitEntity();
             spawnMonster.put(heart.getUniqueId(), entity);
+            if (spawnMonster.size() == monsterCount()) {
+                spawnStats = SpawnStats.END;
+            }
         }
     }
 
@@ -89,6 +89,9 @@ public class MonsterSpawn implements MonsterDifficulty{
             ActiveMob spade = mob.spawn(BukkitAdapter.adapt(spawnLocation), 1);
             Entity entity = spade.getEntity().getBukkitEntity();
             spawnMonster.put(spade.getUniqueId(), entity);
+            if (spawnMonster.size() == monsterCount() + 1) {
+                spawnStats = SpawnStats.END;
+            }
         }
     }
 

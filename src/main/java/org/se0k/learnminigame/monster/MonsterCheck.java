@@ -13,10 +13,12 @@ import org.se0k.learnminigame.potion.SetPotion;
 import static org.se0k.learnminigame.CommandEvent.difficulty;
 import static org.se0k.learnminigame.game.Game.*;
 import static org.se0k.learnminigame.StatusEnum.*;
-import static org.se0k.learnminigame.monster.MonsterSpawn.spawnMonster;
+import static org.se0k.learnminigame.monster.MonsterSpawn.*;
 
 public class MonsterCheck implements Listener {
 
+    int deathCount = 0;
+    MonsterSpawn monsterSpawn = new MonsterSpawn();
 
     @EventHandler
     public void monsterCheck(MythicMobDeathEvent event) {
@@ -33,33 +35,36 @@ public class MonsterCheck implements Listener {
         switch (difficulty) {
             case "normal" -> {
                 if (monsterName.equals("1레벨 하트병사") || monsterName.equals("2레벨 하트병사") || monsterName.equals("3레벨 하트병사")) {
-                    spawnMonster.remove(mob.getUniqueId());
+                    deathCount += 1;
+
                     player.sendMessage(monsterName + " 처치");
                 }
-                if (spawnStats == SpawnStats.END && spawnMonster.isEmpty()) {
+                if (spawnStats == SpawnStats.END && monsterCount() == deathCount) {
 
+                    monsterSpawn.clear();
                     if (stage == 3) {
                         setPotion.healItem(player);
                     }
                     if (stage == 6) {
                         setPotion.buffItem(player);
                     }
-
+                    deathCount = 0;
                     countDown = 10;
                     if (gameCheck == GameCheck.GAME_BREAK) return;
-                    setGame.gameStart(player);
                     player.sendMessage(stage + "스테이지 클리어");
                     stage += 1;
                     spawnStats = SpawnStats.NOT_END;
+                    setGame.gameStart(player);
                 }
             }
             case "hard" -> {
                 if (monsterName.equals("1레벨 스페이드병사") || monsterName.equals("2레벨 스페이드병사") || monsterName.equals("3레벨 스페이드병사")) {
-                    spawnMonster.remove(mob.getUniqueId());
+                    deathCount += 1;
+
                     player.sendMessage(monsterName + " 처치");
                 }
 
-                if (spawnStats == SpawnStats.END && spawnMonster.isEmpty()) {
+                if (spawnStats == SpawnStats.END && monsterCount() + 1 == deathCount) {
 
                     if (stage == 3) {
                         setPotion.healItem(player);
@@ -67,13 +72,13 @@ public class MonsterCheck implements Listener {
                     if (stage == 6) {
                         setPotion.buffItem(player);
                     }
-
+                    deathCount = 0;
                     countDown = 10;
                     if (gameCheck == GameCheck.GAME_BREAK) return;
-                    setGame.gameStart(player);
                     player.sendMessage(stage + "스테이지");
                     stage += 1;
                     spawnStats = SpawnStats.NOT_END;
+                    setGame.gameStart(player);
                 }
             }
         }
