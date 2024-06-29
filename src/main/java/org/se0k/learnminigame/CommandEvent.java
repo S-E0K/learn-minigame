@@ -64,7 +64,6 @@ public class CommandEvent extends Command {
 
             case "start" -> {
                 if (gameCheck == GameCheck.GAME_START) {
-                    player.sendMessage("이미 시작중");
                     return false;
                 }
                 player.getInventory().clear();

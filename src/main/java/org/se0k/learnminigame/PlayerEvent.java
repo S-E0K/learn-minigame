@@ -31,7 +31,7 @@ public class PlayerEvent implements Listener {
         if (gameCheck != StatusEnum.GameCheck.GAME_START) return;
         stageLoc = StatusEnum.StageLoc.STAGE_OUT;
         Player player = event.getPlayer();
-        event.setKeepInventory(true);
+        event.getDrops().clear();
         player.getInventory().clear();
 
         gameCheck = StatusEnum.GameCheck.GAME_END;

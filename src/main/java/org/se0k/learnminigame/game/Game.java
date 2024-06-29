@@ -34,15 +34,12 @@ public class Game implements SetGame {
             }
         }
 
-
-
         new BukkitRunnable() {
             @Override
             public void run() {
 
                 if (countDown != 0) {
                     if (gameCheck != GameCheck.GAME_BREAK) gameCheck = GameCheck.GAME_END;
-                    player.sendMessage("딜레이중");
                     countDown -= 1;
                 }
 
