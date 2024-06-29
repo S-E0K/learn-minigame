@@ -51,7 +51,7 @@ public class MonsterCheck implements Listener {
                     deathCount = 0;
                     countDown = 10;
                     if (gameCheck == GameCheck.GAME_BREAK) return;
-                    player.sendMessage(stage + "스테이지 클리어");
+                    player.sendMessage("노말 " + stage + "스테이지 클리어");
                     stage += 1;
                     spawnStats = SpawnStats.NOT_END;
                     setGame.gameStart(player);
@@ -66,6 +66,7 @@ public class MonsterCheck implements Listener {
 
                 if (spawnStats == SpawnStats.END && monsterCount() + 1 == deathCount) {
 
+                    monsterSpawn.clear();
                     if (stage == 3) {
                         setPotion.healItem(player);
                     }
@@ -75,7 +76,7 @@ public class MonsterCheck implements Listener {
                     deathCount = 0;
                     countDown = 10;
                     if (gameCheck == GameCheck.GAME_BREAK) return;
-                    player.sendMessage(stage + "스테이지");
+                    player.sendMessage("하드 " + stage + "스테이지");
                     stage += 1;
                     spawnStats = SpawnStats.NOT_END;
                     setGame.gameStart(player);

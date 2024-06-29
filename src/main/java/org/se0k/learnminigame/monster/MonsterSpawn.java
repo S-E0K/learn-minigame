@@ -34,11 +34,13 @@ public class MonsterSpawn implements MonsterDifficulty{
                     @Override
                     public void run() {
                         if (gameCheck == GameCheck.GAME_END) {
+                            player.sendMessage("여긴가");
                             this.cancel();
                             return;
                         }
 
                         if (spawnStats == SpawnStats.END) {
+                            player.sendMessage("아니면 여긴가");
                             this.cancel();
                             return;
                         }

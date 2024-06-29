@@ -19,6 +19,7 @@ import org.se0k.learnminigame.playerData.JsonUtil;
 
 import static org.se0k.learnminigame.CommandEvent.*;
 import static org.se0k.learnminigame.StatusEnum.gameCheck;
+import static org.se0k.learnminigame.StatusEnum.stageLoc;
 import static org.se0k.learnminigame.game.Game.stage;
 
 public class PlayerEvent implements Listener {
@@ -28,15 +29,17 @@ public class PlayerEvent implements Listener {
     @EventHandler
     public void playerDeathEnd(PlayerDeathEvent event) {
         if (gameCheck != StatusEnum.GameCheck.GAME_START) return;
+        stageLoc = StatusEnum.StageLoc.STAGE_OUT;
         Player player = event.getPlayer();
-        event.getKeepInventory();
+        event.setKeepInventory(true);
         player.getInventory().clear();
 
         gameCheck = StatusEnum.GameCheck.GAME_END;
         SetGame setGame = new Game();
         setGame.gameEnd(player);
-        player.sendMessage("현재 스테이지: " + stage + " 스테이지에서 죽으셨습니다");
-        player.sendMessage("최고 클리어 스테이지: " + playerStage.get(player.getName()) + "스테이지");
+        player.sendMessage(difficulty + "난이도의 " + stage + " 스테이지에서 죽으셨습니다");
+        if (!playerStageNormal.isEmpty()) player.sendMessage("노말 난이도 최고 클리어 스테이지: " + playerStageNormal.get(player.getName()));
+        if (!playerStageHard.isEmpty()) player.sendMessage("하드 난이도 최고 클리어 스테이지: " + playerStageHard.get(player.getName()));
         jsonUtil.dataSave(player);
 
         Location location = new Location(world, 0.5, world.getHighestBlockYAt(0, 0) + 2, 7.5);
@@ -50,7 +53,8 @@ public class PlayerEvent implements Listener {
     @EventHandler
     public void playerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        jsonUtil.dataLoad(player);
+        jsonUtil.dataLoadNormal(player);
+        jsonUtil.dataLoadHard(player);
     }
 
     @EventHandler

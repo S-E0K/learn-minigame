@@ -28,7 +28,8 @@ public class CommandEvent extends Command {
     final Map<UUID, Location> playerLoc = new HashMap<>();
     public static String difficulty = "normal";
 
-    public final static Map<String, Integer> playerStage = new HashMap<>();
+    public final static Map<String, Integer> playerStageNormal = new HashMap<>();
+    public final static Map<String, Integer> playerStageHard = new HashMap<>();
 
     public static World world = miniGameWorld("miniGame");
     JsonUtil jsonUtil = new JsonUtil();
@@ -62,7 +63,10 @@ public class CommandEvent extends Command {
             }
 
             case "start" -> {
-                if (gameCheck == GameCheck.GAME_START) return false;
+                if (gameCheck == GameCheck.GAME_START) {
+                    player.sendMessage("이미 시작중");
+                    return false;
+                }
                 player.getInventory().clear();
                 stage = 1;
                 SetWeapon setWeapon = new GiveWeapon();
