@@ -70,7 +70,7 @@ public class MonsterSpawn implements MonsterDifficulty{
         MythicMob mob = MythicBukkit.inst().getMobManager().getMythicMob(normalStageMonster()).orElse(null);
         Location spawnLocation = player.getLocation();
         spawnLocation.set(1, -59, 30);
-        if (mob != null) {
+        if (mob != null && gameCheck != GameCheck.GAME_BREAK) {
             ActiveMob heart = mob.spawn(BukkitAdapter.adapt(spawnLocation), 1);
             Entity entity = heart.getEntity().getBukkitEntity();
             spawnMonster.put(heart.getUniqueId(), entity);
@@ -85,7 +85,7 @@ public class MonsterSpawn implements MonsterDifficulty{
         MythicMob mob = MythicBukkit.inst().getMobManager().getMythicMob(hardStageMonster()).orElse(null);
         Location spawnLocation = player.getLocation();
         spawnLocation.set(1, -59, 20);
-        if (mob != null) {
+        if (mob != null && gameCheck != GameCheck.GAME_BREAK) {
             ActiveMob spade = mob.spawn(BukkitAdapter.adapt(spawnLocation), 1);
             Entity entity = spade.getEntity().getBukkitEntity();
             spawnMonster.put(spade.getUniqueId(), entity);

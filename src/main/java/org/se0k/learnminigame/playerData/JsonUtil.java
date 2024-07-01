@@ -20,7 +20,7 @@ public class JsonUtil {
     public void dataSave(Player player) {
         switch (difficulty) {
             case "normal" -> {
-                path = Path.of("playerData/normal/" + player.getName() + ".json"); // 파일 경로
+                path = Path.of("playerData/" + player.getName() + "/normal.json"); // 파일 경로
                 if (Files.notExists(path)) { // 파일이 없다면
                     try {
                         Files.createDirectories(path.getParent()); // 파일 생성
@@ -36,7 +36,7 @@ public class JsonUtil {
             }
 
             case "hard" -> {
-                path = Path.of("playerData/hard/" + player.getName() + ".json"); // 파일 경로
+                path = Path.of("playerData/" + player.getName() + "/hard.json"); // 파일 경로
                 if (Files.notExists(path)) { // 파일이 없다면
                     try {
                         Files.createDirectories(path.getParent()); // 파일 생성
@@ -67,7 +67,7 @@ public class JsonUtil {
     }
 
     public void dataLoadNormal(Player player) {
-        Path path = Path.of("playerData/normal/" + player.getName() + ".json");
+        path = Path.of("playerData/" + player.getName() + "/normal.json");
         try (BufferedReader reader = new BufferedReader(new FileReader(path.toFile()))) {  // 버퍼리더를 이용해 읽기
             Type type = new TypeToken<Map<String, Integer>>() {}.getType(); // 읽을 타입 변환
             Map<String, Integer> data = gson.fromJson(reader, type); // 읽어서 맵에 저장
@@ -80,7 +80,7 @@ public class JsonUtil {
         }
     }
     public void dataLoadHard(Player player) {
-        Path path = Path.of("playerData/hard/" + player.getName() + ".json");
+        path = Path.of("playerData/" + player.getName() + "/hard.json");
         try (BufferedReader reader = new BufferedReader(new FileReader(path.toFile()))) {
             Type type = new TypeToken<Map<String, Integer>>() {}.getType();
             Map<String, Integer> data = gson.fromJson(reader, type);

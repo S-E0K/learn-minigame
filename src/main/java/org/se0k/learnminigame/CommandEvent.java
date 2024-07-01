@@ -66,6 +66,7 @@ public class CommandEvent extends Command {
                 if (gameCheck == GameCheck.GAME_START) {
                     return false;
                 }
+                gameCheck = GameCheck.GAME_START;
                 player.getInventory().clear();
                 stage = 1;
                 SetWeapon setWeapon = new GiveWeapon();
@@ -74,7 +75,7 @@ public class CommandEvent extends Command {
                 setWeapon.giveBow(player);
 
                 player.sendMessage("게임 시작");
-                gameCheck = GameCheck.GAME_START;
+
                 SetGame setGame = new Game();
                 setGame.gameStart(player);
             }
